@@ -60,7 +60,6 @@ public class MeleeAutoAttack : MonoBehaviour
     void Update()
     {
         autoAttackCurrentTime += Time.deltaTime;
-        Debug.Log(GetEnemiesInRange().Count);
         if (canAttack)
         {
             if (autoAttackCurrentTime < autoAttackCooldown)

@@ -8,6 +8,8 @@ public class EnemyHealth : MonoBehaviour
     public float currentHealth;
     public float maxHealth;
 
+    public GameObject enemyGenerator;
+
     public GameObject healthBarUI;
     public Slider slider;
 
@@ -15,6 +17,9 @@ public class EnemyHealth : MonoBehaviour
     {
         currentHealth = maxHealth;
         slider.value = CalculateHealth();
+
+        enemyGenerator = GameObject.Find("EnemyGenerator");
+
         // For debugging enemy health bar UI;
         // InvokeRepeating("LowerHealth", 1.0f, 1.0f);
     }
@@ -40,6 +45,10 @@ public class EnemyHealth : MonoBehaviour
         slider.value = CalculateHealth();
         if (currentHealth <= 0)
         {
+            if (enemyGenerator)
+            {
+                enemyGenerator.GetComponent<EnemyGenerator>().EnemyDied();
+            }
             Destroy(gameObject);
         }
         else
