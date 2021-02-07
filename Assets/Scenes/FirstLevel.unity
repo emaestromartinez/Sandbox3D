@@ -437,6 +437,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   currentHealth: 0
   maxHealth: 100
+  expPoints: 0
   healthBar: {fileID: 1864867801}
 --- !u!114 &256987729
 MonoBehaviour:
@@ -452,8 +453,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   autoAttackCooldown: 1.5
   autoAttackCurrentTime: 0
-  autoAttackRange: 15
-  damage: 100
+  autoAttackRange: 3
+  damage: 2
 --- !u!1 &582247790
 GameObject:
   m_ObjectHideFlags: 0
@@ -514,7 +515,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 582247790}
   m_LocalRotation: {x: 0.38268915, y: -1.2354717e-15, z: 5.4634866e-17, w: 0.9238772}
-  m_LocalPosition: {x: 419.88, y: 140.6679, z: 578.0926}
+  m_LocalPosition: {x: 419.88, y: 142.78923, z: 575.9713}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 733711965}
@@ -667,7 +668,7 @@ MonoBehaviour:
   m_TargetMovementOnly: 1
   m_ScreenX: 0.5
   m_ScreenY: 0.5
-  m_CameraDistance: 25
+  m_CameraDistance: 28
   m_DeadZoneWidth: 0
   m_DeadZoneHeight: 0
   m_DeadZoneDepth: 0
@@ -870,7 +871,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 963194225}
   m_LocalRotation: {x: 0.38268915, y: -1.2354717e-15, z: 5.4634866e-17, w: 0.9238772}
-  m_LocalPosition: {x: 419.88, y: 140.6679, z: 578.0926}
+  m_LocalPosition: {x: 419.88, y: 142.78923, z: 575.9713}
   m_LocalScale: {x: 1, y: 1.6521178, z: 1.0478821}
   m_Children: []
   m_Father: {fileID: 0}
@@ -939,7 +940,7 @@ GameObject:
   - component: {fileID: 1493616534}
   - component: {fileID: 1493616533}
   m_Layer: 5
-  m_Name: Canvas
+  m_Name: InGameUI
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1036,6 +1037,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Enabled
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1164986160014209946, guid: 52a7186deda7249d2b053898b3b66199,
+        type: 3}
+      propertyPath: maxEnemyCount
+      value: 4
       objectReference: {fileID: 0}
     - target: {fileID: 1164986160014209946, guid: 52a7186deda7249d2b053898b3b66199,
         type: 3}

@@ -6,7 +6,7 @@ using UnityEngine.UI;
 public class HealthBar : MonoBehaviour
 {
     public Slider healthBar;
-    public PlayerHealth playerHealth;
+    public PlayerStats playerHealth;
     public Image healthBarImage;
 
     private float healthPercentage;

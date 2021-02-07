@@ -3,10 +3,15 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class EnemyHealth : MonoBehaviour
+public class EnemyStats : MonoBehaviour
 {
+    // Player
+    private GameObject player;
+
+    // Enemy stats
     public float currentHealth;
     public float maxHealth;
+    private int expPoints = 2;
 
     public GameObject enemyGenerator;
 
@@ -15,6 +20,8 @@ public class EnemyHealth : MonoBehaviour
 
     void Start()
     {
+        player = GameObject.FindGameObjectsWithTag("Player")[0];
+
         currentHealth = maxHealth;
         slider.value = CalculateHealth();
 
@@ -47,6 +54,7 @@ public class EnemyHealth : MonoBehaviour
         {
             if (enemyGenerator)
             {
+                player.GetComponent<PlayerStats>().addExperience(expPoints);
                 enemyGenerator.GetComponent<EnemyGenerator>().EnemyDied();
             }
             Destroy(gameObject);

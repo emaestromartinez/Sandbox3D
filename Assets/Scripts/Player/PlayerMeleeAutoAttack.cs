@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class MeleeAutoAttack : MonoBehaviour
+public class PlayerMeleeAutoAttack : MonoBehaviour
 {
     public float autoAttackCooldown;
     public float autoAttackCurrentTime;
@@ -51,7 +51,7 @@ public class MeleeAutoAttack : MonoBehaviour
 
     private void BasicAttack(Transform closestEnemy)
     {
-        EnemyHealth enemyHealth = closestEnemy.GetComponent<EnemyHealth>();
+        EnemyStats enemyHealth = closestEnemy.GetComponent<EnemyStats>();
         enemyHealth.TakeDamage(damage);
     }
 

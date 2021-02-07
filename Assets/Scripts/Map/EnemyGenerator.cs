@@ -9,7 +9,8 @@ public class EnemyGenerator : MonoBehaviour
     public int yPosition = 125;
     public int zPosition;
     public float generationCooldown = 2f;
-    public int enemyCount = 0;
+    public int maxEnemyCount = 0;
+    private int enemyCount = 0;
 
     private bool isSpawining = false;
 
@@ -29,7 +30,7 @@ public class EnemyGenerator : MonoBehaviour
     IEnumerator SpawnEnemy()
     {
         isSpawining = true;
-        while (enemyCount < 4)
+        while (enemyCount < maxEnemyCount)
         {
             yield return new WaitForSeconds(generationCooldown);
             xPosition = Random.Range(400, 450);
@@ -52,13 +53,5 @@ public class EnemyGenerator : MonoBehaviour
         else if (zPosition <= 610) yPosition = 120;
         else yPosition = 122;
     }
-    private void OnDisable()
-    {
-        Debug.Log("BECAME DISABLEDDDO");
-    }
-    private void OnDestroy()
-    {
-        Debug.Log("BECAME DESTRRTRTRTROOOYEDO");
 
-    }
 }
