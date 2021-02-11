@@ -6,55 +6,33 @@ using UnityEngine.UI;
 public class EnemyStats : MonoBehaviour
 {
     // Player
-    private GameObject player;
+    protected GameObject player;
 
     // Enemy stats
     public float currentHealth;
     public float maxHealth;
-    private int expPoints = 2;
+    protected int expPoints;
 
     public GameObject enemyGenerator;
 
     public GameObject healthBarUI;
     public Slider slider;
 
-    void Start()
-    {
-        player = GameObject.FindGameObjectsWithTag("Player")[0];
-
-        currentHealth = maxHealth;
-        slider.value = CalculateHealth();
-
-        enemyGenerator = GameObject.Find("EnemyGenerator");
-
-        // For debugging enemy health bar UI;
-        // InvokeRepeating("LowerHealth", 1.0f, 1.0f);
-    }
     public void TakeDamage(int damage)
     {
         if (damage < 0) return;
         if (damage > currentHealth) currentHealth = 0;
         else currentHealth -= damage;
     }
-    private void LowerHealth()
-    { //function to invokeRepeat for debugging;
-        if (currentHealth < 0)
-        {
-            currentHealth = 100f;
-        }
-        else
-        {
-            currentHealth -= 20f;
-        }
-    }
-    void Update()
+
+    protected void Update()
     {
         slider.value = CalculateHealth();
         if (currentHealth <= 0)
         {
             if (enemyGenerator)
             {
-                player.GetComponent<PlayerStats>().addExperience(expPoints);
+                GameMaster.GM.levelSystem.AddExperience(expPoints);
                 enemyGenerator.GetComponent<EnemyGenerator>().EnemyDied();
             }
             Destroy(gameObject);
@@ -70,7 +48,7 @@ public class EnemyStats : MonoBehaviour
             healthBarUI.SetActive(true);
         }
     }
-    float CalculateHealth()
+    protected float CalculateHealth()
     {
         return currentHealth / maxHealth;
     }

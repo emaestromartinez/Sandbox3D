@@ -6,18 +6,14 @@ using UnityEngine.SceneManagement;
 
 public class PlayerStats : MonoBehaviour
 {
-
-
-
     public HealthBar healthBar;
 
     public int currentHealth = 0;
     public int maxHealth = 100;
     [SerializeField] private int expPoints = 0;
+    [SerializeField] private CharacterStat weaponPower = new CharacterStat(10);
     [SerializeField] private CharacterStat armor = new CharacterStat(1);
-    [SerializeField] private CharacterStat strength = new CharacterStat(10);
 
-    private LevelSystem levelSystem;
 
     private void Awake()
     {
@@ -25,14 +21,19 @@ public class PlayerStats : MonoBehaviour
     }
     void Start()
     {
-        maxHealth = 100 + Mathf.RoundToInt(strength.Value); ;
+        maxHealth = 100 + Mathf.RoundToInt(weaponPower.Value); ;
         currentHealth = maxHealth;
-    }
-    public void SetLevelSystem(LevelSystem levelSystem)
-    {
-        this.levelSystem = levelSystem;
 
-        // levelSystem.onLevelChanged
+        GameMaster.GM.levelSystem.OnExperienceChanged += LevelSystem_OnExperienceChanged;
+        GameMaster.GM.levelSystem.OnLevelChanged += LevelSystem_OnLevelChanged;
+    }
+
+    private void LevelSystem_OnLevelChanged(object sender, System.EventArgs e)
+    { }
+
+    private void LevelSystem_OnExperienceChanged(object sender, System.EventArgs e)
+    {
+        this.expPoints = GameMaster.GM.levelSystem.GetExperience(); // Only to show it in the unity inspector;
     }
 
     public float GetHealthPercentage()
@@ -57,7 +58,8 @@ public class PlayerStats : MonoBehaviour
 
     public void addExperience(int expPoints)
     {
-        this.expPoints += expPoints;
+        GameMaster.GM.levelSystem.AddExperience(expPoints);
+        this.expPoints = GameMaster.GM.levelSystem.GetExperience();
     }
     public void TakeDamage(int damage)
     {
