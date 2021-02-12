@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
 
-public class IsometricPlayerMovement3D : MonoBehaviour
+public class PlayerMovement : MonoBehaviour
 {
 
     public PlayerMovementInput movementInput;
@@ -18,6 +18,7 @@ public class IsometricPlayerMovement3D : MonoBehaviour
 
     Vector2 movementVector;
     bool lastActionWasClick = false;
+    public bool holdingMouseButton = false;
 
     private Vector3 destination;
     // public GridLayout grid;
@@ -51,6 +52,7 @@ public class IsometricPlayerMovement3D : MonoBehaviour
     private void Start()
     {
         movementInput.Mouse.MouseClick.performed += (_) => MouseClick();
+        movementInput.Mouse.MouseClick.canceled += (context) => holdingMouseButton = false;
         movementInput.Keyboard.Movement.performed += (context) =>
         {
             lastActionWasClick = false;
@@ -64,13 +66,14 @@ public class IsometricPlayerMovement3D : MonoBehaviour
             movementVector = Vector2.zero;
         };
 
-        destination = transform.position;
+        // destination = transform.position;
     }
 
     private void MouseClick()
     {
-        navMeshAgent.enabled = true;
+        if (!navMeshAgent.enabled) navMeshAgent.enabled = true;
 
+        holdingMouseButton = true;
         lastActionWasClick = true;
         Vector2 mousePosition = movementInput.Mouse.MousePosition.ReadValue<Vector2>();
 
@@ -86,23 +89,40 @@ public class IsometricPlayerMovement3D : MonoBehaviour
 
     void FixedUpdate()
     {
-        Vector3 currentPos = rbody.position;
+        // WASD movement;
+        if (holdingMouseButton)
+        {
+            MouseClick();
+            return;
+        }
+        if (!lastActionWasClick)
+        {
+            Vector3 currentPos = rbody.position;
 
-        Vector3 inputVector = new Vector3(movementVector.x, 0f, movementVector.y).normalized;
+            Vector3 inputVector = new Vector3(movementVector.x, 0f, movementVector.y).normalized;
 
-        Vector3 movement = inputVector * movementSpeed;
-        Vector3 newPos = currentPos + movement * Time.fixedDeltaTime;
-        // if (!lastActionWasClick) isoRenderer.SetDirection(movement);
+            Vector3 movement = inputVector * movementSpeed;
+            Vector3 newPos = currentPos + movement * Time.fixedDeltaTime;
+            // if (!lastActionWasClick) isoRenderer.SetDirection(movement);
 
-        rbody.MovePosition(newPos);
+            rbody.MovePosition(newPos);
+            return;
+        }
 
 
-        // Only line needed for mouse movement in FixedUpdate;
-        if (lastActionWasClick && Vector3.Distance(rbody.position, destination) > 0.1f)
+        // Mouse movement;
+        if (lastActionWasClick && Vector3.Distance(rbody.position, navMeshAgent.destination) > 1f)
         {
             // isoRenderer.SetDirection((Vector2)destination - rbody.position);
+            // Debug.Log(Vector3.Distance(rbody.position, navMeshAgent.destination));
 
             rbody.position = Vector3.MoveTowards(rbody.position, destination, movementSpeed * Time.deltaTime);
+
+        }
+        else if (lastActionWasClick)
+        {
+            lastActionWasClick = false;
+            navMeshAgent.enabled = false;
         }
     }
 
