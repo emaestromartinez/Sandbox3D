@@ -25,29 +25,7 @@ public class EnemyStats : MonoBehaviour
         else currentHealth -= damage;
     }
 
-    protected void Update()
-    {
-        slider.value = CalculateHealth();
-        if (currentHealth <= 0)
-        {
-            if (enemyGenerator)
-            {
-                GameMaster.GM.levelSystem.AddExperience(expPoints);
-                enemyGenerator.GetComponent<EnemyGenerator>().EnemyDied();
-            }
-            Destroy(gameObject);
-        }
-        else
-        if (currentHealth > maxHealth)
-        {
-            currentHealth = maxHealth;
-        }
-        else
-        if (currentHealth < maxHealth)
-        {
-            healthBarUI.SetActive(true);
-        }
-    }
+
     protected float CalculateHealth()
     {
         return currentHealth / maxHealth;

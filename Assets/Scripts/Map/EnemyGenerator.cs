@@ -5,9 +5,18 @@ using UnityEngine;
 public class EnemyGenerator : MonoBehaviour
 {
     public GameObject enemy;
-    public int xPosition;
-    public int yPosition = 125;
-    public int zPosition;
+
+    [SerializeField] private int XminPosition;
+    [SerializeField] private int XmaxPosition;
+
+    [SerializeField] private int yPosition;
+
+    [SerializeField] private int ZminPosition;
+    [SerializeField] private int ZmaxPosition;
+
+    private int xPosition;
+    private int zPosition;
+
     public float generationCooldown = 2f;
     public int maxEnemyCount = 0;
     private int enemyCount = 0;
@@ -33,9 +42,9 @@ public class EnemyGenerator : MonoBehaviour
         while (enemyCount < maxEnemyCount)
         {
             yield return new WaitForSeconds(generationCooldown);
-            xPosition = Random.Range(400, 450);
-            zPosition = Random.Range(580, 620);
-            CalculateProperHeight();
+            Debug.Log("enemy sàwnedd");
+            xPosition = Random.Range(XminPosition, XmaxPosition);
+            zPosition = Random.Range(ZminPosition, ZmaxPosition);
             Instantiate(enemy, new Vector3(xPosition, yPosition, zPosition), Quaternion.identity);
             enemyCount++;
         }
@@ -47,11 +56,6 @@ public class EnemyGenerator : MonoBehaviour
     {
         if (enemyCount > 0) enemyCount--;
     }
-    void CalculateProperHeight()
-    {
-        if (zPosition <= 595) yPosition = 116;
-        else if (zPosition <= 610) yPosition = 120;
-        else yPosition = 122;
-    }
+
 
 }
